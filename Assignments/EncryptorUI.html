@@ -1,0 +1,57 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Encryption App</title>
+</head>
+<body>
+  <h2>Encryption System</h2>
+  
+
+  <input type="text" id="userInput" placeholder="Enter text" />
+  <button onclick="encryptWord()">Encrypt</button>
+
+  <h3>Encrypted Output:</h3>
+  <div id="output"></div>
+
+  <script>
+    const sentence = "the quick brown fox jumps over the lazy dog.";
+    const words = sentence.replace('.', '').split(' '); // Remove period and split into words
+
+    function encryptWord() {
+      const input = document.getElementById("userInput").value.toLowerCase();
+      const outputDiv = document.getElementById("output");
+      let encrypted = [];
+
+      for (let charIndex = 0; charIndex < input.length; charIndex++) {
+        const char = input[charIndex];
+
+        if (char === ' ') {
+          encrypted.push('-'); // Replace space with hyphen
+          continue;
+        }
+
+        let found = false;
+        for (let wordIndex = 0; wordIndex < words.length; wordIndex++) {
+          const word = words[wordIndex];
+          const letterIndex = word.indexOf(char);
+
+          if (letterIndex !== -1) {
+            encrypted.push(`(${wordIndex},${letterIndex})`);
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          encrypted.push(`?,?`); // Character not found in sentence
+        }
+      }
+
+      outputDiv.innerText = encrypted.join(' ');
+    }
+  </script>
+</body>
+</html>
